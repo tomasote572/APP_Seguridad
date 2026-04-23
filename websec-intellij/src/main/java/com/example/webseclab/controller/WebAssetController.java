@@ -1,0 +1,62 @@
+package com.example.webseclab.controller;
+
+import com.example.webseclab.model.AssetType;
+import com.example.webseclab.model.WebAsset;
+import com.example.webseclab.service.WebAssetService;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+@Controller
+@RequestMapping("/assets")
+public class WebAssetController {
+    private final WebAssetService service;
+    private final com.example.webseclab.service.DastScannerService scannerService;
+
+    public WebAssetController(WebAssetService service, com.example.webseclab.service.DastScannerService scannerService) {
+        this.service = service;
+        this.scannerService = scannerService;
+    }
+
+    @GetMapping("/scan/{id}")
+    public String scan(@PathVariable Long id) {
+        WebAsset asset = service.findById(id);
+        if (asset != null) {
+            scannerService.scanAsset(asset);
+        }
+        return "redirect:/findings";
+    }
+
+    @PostMapping("/quick-scan")
+    public String quickScan(@RequestParam String url) {
+        WebAsset asset = new WebAsset();
+        asset.setName("DAST Rápido");
+        asset.setType(AssetType.WEB);
+        asset.setUrl(url);
+        asset.setTechnology("-");
+        asset.setDescription("Escaneo automatizado rápido.");
+        WebAsset saved = service.save(asset);
+        scannerService.scanAsset(saved);
+        return "redirect:/findings";
+    }
+
+    @GetMapping
+    public String list(Model model) {
+        model.addAttribute("assets", service.findAll());
+        model.addAttribute("asset", new WebAsset());
+        model.addAttribute("types", AssetType.values());
+        return "assets";
+    }
+
+    @PostMapping
+    public String save(@ModelAttribute WebAsset asset) {
+        service.save(asset);
+        return "redirect:/assets";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable Long id) {
+        service.deleteById(id);
+        return "redirect:/assets";
+    }
+}
