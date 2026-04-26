@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Activos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div th:replace="fragments :: navbar"></div>
+<div class="container">
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card shadow-sm mb-4"><div class="card-body">
+                <h3>Escaneo DAST Rápido</h3>
+                <p class="text-muted small">Ingresa la URL y nosotros haremos el resto.</p>
+                <form th:action="@{/assets/quick-scan}" method="post">
+                    <input type="url" name="url" class="form-control mb-2" placeholder="https://ejemplo.com" required>
+                    <button type="submit" class="btn btn-primary w-100">Escanear URL</button>
+                </form>
+            </div></div>
+
+            <div class="card shadow-sm"><div class="card-body">
+                <h3>Nuevo activo manual</h3>
+                <form th:action="@{/assets}" th:object="${asset}" method="post">
+                    <input class="form-control mb-2" th:field="*{name}" placeholder="Nombre" required>
+                    <select class="form-select mb-2" th:field="*{type}">
+                        <option th:each="t : ${types}" th:value="${t}" th:text="${t}"></option>
+                    </select>
+                    <input class="form-control mb-2" th:field="*{url}" placeholder="URL" required>
+                    <input class="form-control mb-2" th:field="*{technology}" placeholder="Tecnología">
+                    <textarea class="form-control mb-2" th:field="*{description}" placeholder="Descripción"></textarea>
+                    <button class="btn btn-dark w-100">Guardar</button>
+                </form>
+            </div></div>
+        </div>
+        <div class="col-md-8">
+            <div class="card shadow-sm"><div class="card-body">
+                <h3>Activos registrados</h3>
+                <table class="table table-hover">
+                    <thead><tr><th>Nombre</th><th>Tipo</th><th>URL</th><th>Tecnología</th><th></th></tr></thead>
+                    <tbody>
+                    <tr th:each="a : ${assets}">
+                        <td th:text="${a.name}"></td>
+                        <td th:text="${a.type}"></td>
+                        <td th:text="${a.url}"></td>
+                        <td th:text="${a.technology}"></td>
+                        <td>
+                            <div class="d-flex gap-2">
+                                <a class="btn btn-sm btn-primary" th:href="@{'/assets/scan/' + ${a.id}}">Escanear (DAST)</a>
+                                <a class="btn btn-sm btn-danger" th:href="@{'/assets/delete/' + ${a.id}}">Eliminar</a>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div></div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

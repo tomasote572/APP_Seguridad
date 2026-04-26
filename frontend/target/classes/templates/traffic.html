@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Tráfico</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div th:replace="fragments :: navbar"></div>
+<div class="container">
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card shadow-sm"><div class="card-body">
+                <h3>Nuevo registro de tráfico</h3>
+                <form th:action="@{/traffic}" th:object="${log}" method="post">
+                    <input class="form-control mb-2" th:field="*{protocolName}" placeholder="Protocolo">
+                    <input class="form-control mb-2" th:field="*{sourceIp}" placeholder="IP origen">
+                    <input class="form-control mb-2" th:field="*{destinationIp}" placeholder="IP destino">
+                    <textarea class="form-control mb-2" th:field="*{observation}" placeholder="Observación"></textarea>
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" type="checkbox" th:field="*{sensitiveDataExposed}">
+                        <label class="form-check-label">Datos sensibles expuestos</label>
+                    </div>
+                    <button class="btn btn-dark w-100">Guardar</button>
+                </form>
+            </div></div>
+        </div>
+        <div class="col-md-8">
+            <div class="card shadow-sm"><div class="card-body">
+                <h3>Bitácora de tráfico</h3>
+                <table class="table table-striped">
+                    <thead><tr><th>Protocolo</th><th>Origen</th><th>Destino</th><th>Sensibles</th><th></th></tr></thead>
+                    <tbody>
+                    <tr th:each="l : ${logs}">
+                        <td th:text="${l.protocolName}"></td>
+                        <td th:text="${l.sourceIp}"></td>
+                        <td th:text="${l.destinationIp}"></td>
+                        <td th:text="${l.sensitiveDataExposed ? 'Sí' : 'No'}"></td>
+                        <td><a class="btn btn-sm btn-danger" th:href="@{'/traffic/delete/' + ${l.id}}">Eliminar</a></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div></div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

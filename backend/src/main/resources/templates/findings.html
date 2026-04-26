@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Hallazgos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div th:replace="fragments :: navbar"></div>
+<div class="container">
+    <div class="row g-4">
+        <div class="col-md-5">
+            <div class="card shadow-sm"><div class="card-body">
+                <h3>Nuevo hallazgo</h3>
+                <form th:action="@{/findings}" th:object="${finding}" method="post">
+                    <select class="form-select mb-2" th:field="*{asset}">
+                        <option th:each="a : ${assets}" th:value="${a.id}" th:text="${a.name}"></option>
+                    </select>
+                    <input class="form-control mb-2" th:field="*{title}" placeholder="Título">
+                    <input class="form-control mb-2" th:field="*{owaspCategory}" placeholder="OWASP">
+                    <input class="form-control mb-2" th:field="*{endpoint}" placeholder="Endpoint">
+                    <input class="form-control mb-2" th:field="*{method}" placeholder="Método HTTP">
+                    <input class="form-control mb-2" th:field="*{parameterName}" placeholder="Parámetro">
+                    <textarea class="form-control mb-2" th:field="*{payload}" placeholder="Payload usado"></textarea>
+                    <textarea class="form-control mb-2" th:field="*{evidence}" placeholder="Evidencia"></textarea>
+                    <select class="form-select mb-2" th:field="*{severity}">
+                        <option th:each="s : ${severities}" th:value="${s}" th:text="${s}"></option>
+                    </select>
+                    <textarea class="form-control mb-2" th:field="*{recommendation}" placeholder="Recomendación"></textarea>
+                    <button class="btn btn-dark w-100">Guardar</button>
+                </form>
+            </div></div>
+        </div>
+        <div class="col-md-7">
+            <div class="card shadow-sm"><div class="card-body">
+                <h3>Hallazgos registrados</h3>
+                <table class="table table-striped">
+                    <thead><tr><th>Título</th><th>Activo</th><th>Severidad</th><th>Endpoint</th><th></th></tr></thead>
+                    <tbody>
+                    <tr th:each="f : ${findings}">
+                        <td th:text="${f.title}"></td>
+                        <td th:text="${f.asset.name}"></td>
+                        <td th:text="${f.severity}"></td>
+                        <td th:text="${f.endpoint}"></td>
+                        <td><a class="btn btn-sm btn-danger" th:href="@{'/findings/delete/' + ${f.id}}">Eliminar</a></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div></div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

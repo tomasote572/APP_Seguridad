@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+    <div class="container">
+        <a class="navbar-brand" th:href="@{/}">WebSecLab</a>
+        <div>
+            <a class="btn btn-sm btn-outline-light me-2" th:href="@{/assets}">Activos</a>
+            <a class="btn btn-sm btn-outline-light me-2" th:href="@{/findings}">Hallazgos</a>
+            <a class="btn btn-sm btn-outline-light me-2" th:href="@{/traffic}">Tráfico</a>
+            <a class="btn btn-sm btn-outline-light" th:href="@{/mitigations}">Mitigaciones</a>
+        </div>
+    </div>
+</nav>
+</body>
+</html>
