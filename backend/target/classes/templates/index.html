@@ -30,7 +30,7 @@
                     <td th:text="${f.title}"></td>
                     <td th:text="${f.owaspCategory}"></td>
                     <td th:text="${f.endpoint}"></td>
-                    <td th:text="${f.severity}"></td>
+                    <td th:text="${f.severity}" th:class="'severity-' + ${#strings.toLowerCase(f.severity)}"></td>
                 </tr>
                 </tbody>
             </table>

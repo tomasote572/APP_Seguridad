@@ -6,3 +6,57 @@ body { background: #f5f7fb; }
     border-radius: 16px;
 }
 .card { border: 0; border-radius: 16px; }
+
+/* Estilos de severidad para badges y etiquetas */
+.severity-badge {
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-weight: 600;
+    display: inline-block;
+    font-size: 0.875rem;
+}
+
+.severity-low {
+    background-color: #FF9800;
+    color: white;
+}
+
+.severity-medium {
+    background-color: #FFC107;
+    color: #333;
+}
+
+.severity-high {
+    background-color: #F44336;
+    color: white;
+}
+
+.severity-critical {
+    background-color: #D32F2F;
+    color: white;
+}
+
+/* Alternativa para celdas de tabla */
+td.severity-low {
+    background-color: #FFE8B6;
+    color: #E65100;
+    font-weight: 600;
+}
+
+td.severity-medium {
+    background-color: #FFF9C4;
+    color: #F57F17;
+    font-weight: 600;
+}
+
+td.severity-high {
+    background-color: #FFCDD2;
+    color: #C62828;
+    font-weight: 600;
+}
+
+td.severity-critical {
+    background-color: #F3E5F5;
+    color: #6A1B9A;
+    font-weight: 600;
+}

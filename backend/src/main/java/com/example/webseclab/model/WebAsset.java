@@ -3,6 +3,7 @@ package com.example.webseclab.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
+import java.util.List;
 
 @Entity
 @Table(name = "web_assets")
@@ -25,4 +26,7 @@ public class WebAsset {
 
     @Column(length = 1200)
     private String description;
+
+    @OneToMany(mappedBy = "asset", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<VulnerabilityFinding> findings;
 }

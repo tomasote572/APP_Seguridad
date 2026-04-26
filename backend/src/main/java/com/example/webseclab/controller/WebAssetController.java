@@ -56,7 +56,11 @@ public class WebAssetController {
 
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable Long id) {
-        service.deleteById(id);
+        try {
+            service.deleteById(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return "redirect:/assets";
     }
 }
