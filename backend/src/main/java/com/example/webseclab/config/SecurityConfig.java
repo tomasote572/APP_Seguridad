@@ -23,18 +23,20 @@ public class SecurityConfig {
             // Headers de seguridad (Helmet equivalente)
             .headers(headers -> headers
                 .xssProtection(xss -> xss.headerValue(XXssProtectionHeaderWriter.HeaderValue.ENABLED_MODE_BLOCK))
-                .contentSecurityPolicy(cps -> cps.policyDirectives("script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; img-src 'self' data:;"))
+                .contentSecurityPolicy(cps -> cps.policyDirectives("script-src 'self' https://cdn.jsdelivr.net; style-src 'self' https://cdn.jsdelivr.net; img-src 'self' data:; frame-ancestors 'self';"))
                 .frameOptions(frame -> frame.sameOrigin())
             )
             // CSRF habilitado por defecto en formularios con Thymeleaf
             .csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**"))
             // Autorización de Rutas
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/css/**", "/js/**", "/images/**", "/h2-console/**").permitAll()
+                .requestMatchers("/css/**", "/js/**", "/images/**").permitAll()
+                .requestMatchers("/h2-console/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
             )
             // Autenticación basada en formulario
             .formLogin(form -> form
+                .loginPage("/login")
                 .defaultSuccessUrl("/", true)
                 .permitAll()
             )
@@ -51,12 +53,19 @@ public class SecurityConfig {
     public UserDetailsService userDetailsService() {
         // En un entorno de producción, esto iría contra una base de datos.
         // Aquí lo implementamos en memoria como laboratorio seguro.
-        UserDetails admin = User.builder()
-            .username("admin")
-            .password(passwordEncoder().encode("admin123"))
+        UserDetails tomas = User.builder()
+            .username("tomas")
+            .password(passwordEncoder().encode("nitro321"))
             .roles("ADMIN")
             .build();
-        return new InMemoryUserDetailsManager(admin);
+            
+        UserDetails admin = User.builder()
+            .username("admin")
+            .password(passwordEncoder().encode("sistemas26"))
+            .roles("ADMIN")
+            .build();
+            
+        return new InMemoryUserDetailsManager(tomas, admin);
     }
 
     @Bean

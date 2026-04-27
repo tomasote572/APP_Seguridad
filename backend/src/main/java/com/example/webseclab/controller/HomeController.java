@@ -25,6 +25,11 @@ public class HomeController {
         this.mitigationService = mitigationService;
     }
 
+    @GetMapping("/login")
+    public String login() {
+        return "login";
+    }
+
     @GetMapping("/")
     public String dashboard(Model model) {
         model.addAttribute("assets", assetService.findAll().size());

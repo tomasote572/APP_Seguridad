@@ -18,6 +18,7 @@ com\example\webseclab\model\VulnerabilityFinding.class
 com\example\webseclab\repository\TrafficLogRepository.class
 com\example\webseclab\service\impl\MitigationServiceImpl.class
 com\example\webseclab\model\Severity.class
+com\example\webseclab\config\SecurityConfig.class
 com\example\webseclab\service\TrafficLogService.class
 com\example\webseclab\model\Mitigation$MitigationBuilder.class
 com\example\webseclab\model\Mitigation.class
