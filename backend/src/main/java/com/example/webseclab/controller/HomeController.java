@@ -37,6 +37,13 @@ public class HomeController {
         model.addAttribute("traffic", trafficLogService.findAll().size());
         model.addAttribute("mitigations", mitigationService.findAll().size());
         model.addAttribute("latestFindings", findingService.findAll());
+        
+        // Datos para gráficas
+        model.addAttribute("criticalCount", findingService.countBySeverity("CRITICAL"));
+        model.addAttribute("highCount", findingService.countBySeverity("HIGH"));
+        model.addAttribute("mediumCount", findingService.countBySeverity("MEDIUM"));
+        model.addAttribute("lowCount", findingService.countBySeverity("LOW"));
+        
         return "index";
     }
 }

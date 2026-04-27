@@ -2,40 +2,75 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>WebSecLab</title>
+    <title>WebSecLab - Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 <div th:replace="fragments :: navbar"></div>
 <div class="container">
     <div class="hero mb-4">
-        <h1>WebSecLab</h1>
-        <p>Aplicación web para documentar, gestionar y automatizar el descubrimiento de hallazgos de seguridad (vulnerabilidades) en aplicaciones web y APIs.</p>
-    </div>
-    <div class="row g-3 mb-4">
-        <div class="col-md-3"><div class="card shadow-sm"><div class="card-body"><h5>Activos</h5><p class="display-6" th:text="${assets}">0</p></div></div></div>
-        <div class="col-md-3"><div class="card shadow-sm"><div class="card-body"><h5>Hallazgos</h5><p class="display-6" th:text="${findings}">0</p></div></div></div>
-        <div class="col-md-3"><div class="card shadow-sm"><div class="card-body"><h5>Tráfico</h5><p class="display-6" th:text="${traffic}">0</p></div></div></div>
-        <div class="col-md-3"><div class="card shadow-sm"><div class="card-body"><h5>Mitigaciones</h5><p class="display-6" th:text="${mitigations}">0</p></div></div></div>
+        <h1>Dashboard WebSecLab</h1>
+        <p>Resumen técnico de la postura de seguridad y activos registrados.</p>
     </div>
 
-    <div class="card shadow-sm">
-        <div class="card-header">Hallazgos recientes</div>
-        <div class="card-body">
-            <table class="table table-striped">
-                <thead><tr><th>Título</th><th>OWASP</th><th>Endpoint</th><th>Severidad</th></tr></thead>
-                <tbody>
-                <tr th:each="f : ${latestFindings}">
-                    <td th:text="${f.title}"></td>
-                    <td th:text="${f.owaspCategory}"></td>
-                    <td th:text="${f.endpoint}"></td>
-                    <td th:text="${f.severity}" th:class="'severity-' + ${#strings.toLowerCase(f.severity)}"></td>
-                </tr>
-                </tbody>
-            </table>
+    <!-- Estadísticas Generales -->
+    <div class="row g-3 mb-4 text-center">
+        <div class="col-md-3"><div class="card border-0 shadow-sm bg-primary text-white"><div class="card-body"><h6>Activos</h6><p class="display-6" th:text="${assets}">0</p></div></div></div>
+        <div class="col-md-3"><div class="card border-0 shadow-sm bg-danger text-white"><div class="card-body"><h6>Hallazgos</h6><p class="display-6" th:text="${findings}">0</p></div></div></div>
+        <div class="col-md-3"><div class="card border-0 shadow-sm bg-info text-white"><div class="card-body"><h6>Tráfico</h6><p class="display-6" th:text="${traffic}">0</p></div></div></div>
+        <div class="col-md-3"><div class="card border-0 shadow-sm bg-success text-white"><div class="card-body"><h6>Mitigaciones</h6><p class="display-6" th:text="${mitigations}">0</p></div></div></div>
+    </div>
+
+    <div class="row mb-4">
+        <!-- Gráfica de Severidad -->
+        <div class="col-md-5">
+            <div class="card shadow-sm h-100">
+                <div class="card-header bg-white font-weight-bold">Distribución por Severidad</div>
+                <div class="card-body d-flex justify-content-center align-items-center">
+                    <div class="chart-container">
+                        <canvas id="severityChart" 
+                                th:data-critical="${criticalCount}"
+                                th:data-high="${highCount}" 
+                                th:data-medium="${mediumCount}" 
+                                th:data-low="${lowCount}"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Hallazgos Recientes -->
+        <div class="col-md-7">
+            <div class="card shadow-sm h-100">
+                <div class="card-header bg-white font-weight-bold">Hallazgos Recientes</div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead class="table-light"><tr><th>Título</th><th>OWASP</th><th class="text-center">Severidad</th></tr></thead>
+                            <tbody>
+                            <tr th:each="f : ${latestFindings}">
+                                <td th:text="${f.title}"></td>
+                                <td th:text="${f.owaspCategory}"></td>
+                                <td class="text-center align-middle">
+                                    <span th:text="${f.severity}" 
+                                          th:class="'badge badge-severity ' + (${#strings.toString(f.severity) == 'HIGH' ? 'badge-high' : (#strings.toString(f.severity) == 'CRITICAL' ? 'badge-critical' : (#strings.toString(f.severity) == 'MEDIUM' ? 'badge-medium' : 'badge-low'))})">
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr th:if="${#lists.isEmpty(latestFindings)}">
+                                <td colspan="3" class="text-center text-muted">No hay hallazgos registrados</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
+<!-- Configuración de la Gráfica -->
+<script th:src="@{/js/dashboard.js}"></script>
 </body>
 </html>

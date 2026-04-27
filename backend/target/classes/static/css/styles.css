@@ -7,56 +7,30 @@ body { background: #f5f7fb; }
 }
 .card { border: 0; border-radius: 16px; }
 
-/* Estilos de severidad para badges y etiquetas */
-.severity-badge {
-    padding: 0.5rem 1rem;
-    border-radius: 6px;
-    font-weight: 600;
+/* Alternativa para celdas de tabla (Mantenido para compatibilidad si es necesario) */
+td.severity-low { background-color: #FFE8B6; color: #E65100; font-weight: 600; }
+td.severity-medium { background-color: #FFF9C4; color: #F57F17; font-weight: 600; }
+td.severity-high { background-color: #FFCDD2; color: #C62828; font-weight: 600; }
+td.severity-critical { background-color: #F3E5F5; color: #6A1B9A; font-weight: 600; }
+
+.chart-container {
+    width: 100%;
+    max-width: 300px;
+}
+
+/* Custom badges for findings */
+.badge-severity {
+    min-width: 80px;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: white !important;
     display: inline-block;
-    font-size: 0.875rem;
+    text-align: center;
 }
 
-.severity-low {
-    background-color: #FF9800;
-    color: white;
-}
-
-.severity-medium {
-    background-color: #FFC107;
-    color: #333;
-}
-
-.severity-high {
-    background-color: #F44336;
-    color: white;
-}
-
-.severity-critical {
-    background-color: #D32F2F;
-    color: white;
-}
-
-/* Alternativa para celdas de tabla */
-td.severity-low {
-    background-color: #FFE8B6;
-    color: #E65100;
-    font-weight: 600;
-}
-
-td.severity-medium {
-    background-color: #FFF9C4;
-    color: #F57F17;
-    font-weight: 600;
-}
-
-td.severity-high {
-    background-color: #FFCDD2;
-    color: #C62828;
-    font-weight: 600;
-}
-
-td.severity-critical {
-    background-color: #F3E5F5;
-    color: #6A1B9A;
-    font-weight: 600;
-}
+.badge-low { background-color: #198754; }
+.badge-medium { background-color: #ffc107; }
+.badge-high { background-color: #dc3545; }
+.badge-critical { background-color: #6f42c1; }

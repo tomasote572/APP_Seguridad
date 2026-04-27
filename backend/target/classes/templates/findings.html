@@ -11,45 +11,104 @@
 <div class="container">
     <div class="row g-4">
         <div class="col-md-5">
-            <div class="card shadow-sm"><div class="card-body">
-                <h3>Nuevo hallazgo</h3>
-                <form th:action="@{/findings}" th:object="${finding}" method="post">
-                    <select class="form-select mb-2" th:field="*{asset}">
-                        <option th:each="a : ${assets}" th:value="${a.id}" th:text="${a.name}"></option>
-                    </select>
-                    <input class="form-control mb-2" th:field="*{title}" placeholder="Título">
-                    <input class="form-control mb-2" th:field="*{owaspCategory}" placeholder="OWASP">
-                    <input class="form-control mb-2" th:field="*{endpoint}" placeholder="Endpoint">
-                    <input class="form-control mb-2" th:field="*{method}" placeholder="Método HTTP">
-                    <input class="form-control mb-2" th:field="*{parameterName}" placeholder="Parámetro">
-                    <textarea class="form-control mb-2" th:field="*{payload}" placeholder="Payload usado"></textarea>
-                    <textarea class="form-control mb-2" th:field="*{evidence}" placeholder="Evidencia"></textarea>
-                    <select class="form-select mb-2" th:field="*{severity}">
-                        <option th:each="s : ${severities}" th:value="${s}" th:text="${s}"></option>
-                    </select>
-                    <textarea class="form-control mb-2" th:field="*{recommendation}" placeholder="Recomendación"></textarea>
-                    <button class="btn btn-dark w-100">Guardar</button>
-                </form>
-            </div></div>
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-white py-3">
+                    <h5 class="mb-0">Registrar Nuevo Hallazgo</h5>
+                </div>
+                <div class="card-body">
+                    <form th:action="@{/findings}" th:object="${finding}" method="post">
+                        <div class="mb-3">
+                            <label class="form-label small text-muted">Activo Objetivo</label>
+                            <select class="form-select" th:field="*{asset}">
+                                <option th:each="a : ${assets}" th:value="${a.id}" th:text="${a.name}"></option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <input class="form-control" th:field="*{title}" placeholder="Título de la Vulnerabilidad" required="required">
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col">
+                                <input class="form-control" th:field="*{owaspCategory}" placeholder="Categoría OWASP (Ej: A01)">
+                            </div>
+                            <div class="col">
+                                <select class="form-select" th:field="*{severity}">
+                                    <option th:each="s : ${severities}" th:value="${s}" th:text="${s}"></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <input class="form-control" th:field="*{endpoint}" placeholder="URL / Endpoint afectado">
+                        </div>
+                        <div class="mb-3">
+                            <textarea class="form-control" th:field="*{recommendation}" rows="3" placeholder="Recomendación técnica de mitigación"></textarea>
+                        </div>
+                        
+                        <!-- Campos Opcionales / Técnicos -->
+                        <div class="accordion mb-3" id="techDetails">
+                            <div class="accordion-item border-0">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed py-2 small bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTech">
+                                        Detalles Técnicos Adicionales
+                                    </button>
+                                </h2>
+                                <div id="collapseTech" class="accordion-collapse collapse" data-bs-parent="#techDetails">
+                                    <div class="accordion-body p-2">
+                                        <input class="form-control form-control-sm mb-2" th:field="*{method}" placeholder="Método HTTP">
+                                        <input class="form-control form-control-sm mb-2" th:field="*{parameterName}" placeholder="Parámetro">
+                                        <textarea class="form-control form-control-sm mb-2" th:field="*{payload}" placeholder="Payload / Carga útil"></textarea>
+                                        <textarea class="form-control form-control-sm" th:field="*{evidence}" placeholder="Evidencia del hallazgo"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button class="btn btn-primary w-100 shadow-sm">Guardar Hallazgo</button>
+                    </form>
+                </div>
+            </div>
         </div>
         <div class="col-md-7">
-            <div class="card shadow-sm"><div class="card-body">
-                <h3>Hallazgos registrados</h3>
-                <table class="table table-striped">
-                    <thead><tr><th>Título</th><th>Activo</th><th>Severidad</th><th>Endpoint</th><th></th></tr></thead>
-                    <tbody>
-                    <tr th:each="f : ${findings}">
-                        <td th:text="${f.title}"></td>
-                        <td th:text="${f.asset.name}"></td>
-                        <td th:text="${f.severity}" th:class="'severity-' + ${#strings.toLowerCase(f.severity)}"></td>
-                        <td th:text="${f.endpoint}"></td>
-                        <td><a class="btn btn-sm btn-danger" th:href="@{'/findings/delete/' + ${f.id}}">Eliminar</a></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div></div>
+            <div class="card shadow-sm h-100 border-0">
+                <div class="card-header bg-white py-3">
+                    <h5 class="mb-0">Hallazgos registrados</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Título</th>
+                                    <th>Activo</th>
+                                    <th class="text-center">Severidad</th>
+                                    <th>Endpoint</th>
+                                    <th>Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="f : ${findings}">
+                                <td th:text="${f.title}"></td>
+                                <td th:text="${f.asset.name}"></td>
+                                <td class="text-center align-middle">
+                                    <span th:text="${f.severity}" 
+                                          th:class="'badge badge-severity ' + (${#strings.toString(f.severity) == 'HIGH' ? 'badge-high' : (#strings.toString(f.severity) == 'CRITICAL' ? 'badge-critical' : (#strings.toString(f.severity) == 'MEDIUM' ? 'badge-medium' : 'badge-low'))})">
+                                    </span>
+                                </td>
+                                <td th:text="${f.endpoint}"></td>
+                                <td>
+                                    <a class="btn btn-sm btn-danger" th:href="@{'/findings/delete/' + ${f.id}}">Eliminar</a>
+                                </td>
+                            </tr>
+                            <tr th:if="${#lists.isEmpty(findings)}">
+                                <td colspan="5" class="text-center text-muted py-4">No hay hallazgos registrados</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -1,6 +1,11 @@
 package com.example.webseclab.config;
 
-import com.example.webseclab.model.*;
+import com.example.webseclab.model.WebAsset;
+import com.example.webseclab.model.AssetType;
+import com.example.webseclab.model.VulnerabilityFinding;
+import com.example.webseclab.model.Severity;
+import com.example.webseclab.model.TrafficLog;
+import com.example.webseclab.model.Mitigation;
 import com.example.webseclab.repository.MitigationRepository;
 import com.example.webseclab.repository.TrafficLogRepository;
 import com.example.webseclab.repository.VulnerabilityFindingRepository;
