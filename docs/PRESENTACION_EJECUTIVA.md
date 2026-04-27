@@ -21,8 +21,9 @@ Esta guía contiene el contenido que debes copiar en el **PowerPoint Template 2*
 ## Diapositiva 4: Stack Tecnológico (SBOM)
 - **Backend**: Java 21, Spring Boot, Spring Security, JPA.
 - **Frontend**: Thymeleaf, Bootstrap 5 (CSP compliant).
-- **Base de Datos**: H2 (Persistencia local).
-- **Seguridad**: BCrypt, CSP, CSRF protection, HSTS.
+- **Base de Datos**: PostgreSQL (Producción en NeonDB) / H2 (Desarrollo).
+- **Despliegue (CI/CD)**: GitHub Actions hacia Azure App Service.
+- **Seguridad**: Variables de entorno seguras, BCrypt, CSP, CSRF, HSTS.
 
 ## Diapositiva 5: Arquitectura Técnica
 - *Insertar Diagrama de Mermaid de DOCUMENTACION_COMPLETA.md*

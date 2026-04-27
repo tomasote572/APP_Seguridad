@@ -224,10 +224,17 @@ Abre tu navegador en: **http://localhost:8080**
 
 ## 📊 Base de Datos
 
+La aplicación utiliza una estrategia de doble entorno para la base de datos:
+
+**1. Entorno de Desarrollo (Local)**
 - **Tipo**: H2 Database (Embebida)
 - **Ubicación**: `backend/data/webseclab`
-- **Persistencia**: Archivo local (los datos se mantienen entre reinicios)
+- **Persistencia**: Archivo local
 - **Consola H2**: Disponible en `http://localhost:8080/h2-console` (requiere rol ADMIN)
+
+**2. Entorno de Producción (Nube)**
+- **Tipo**: PostgreSQL (Alojado en Neon.tech)
+- **Seguridad**: Conexión SSL (`sslmode=require`) y credenciales inyectadas vía variables de entorno en Azure, protegiendo así los secretos del código fuente.
 
 ---
 
@@ -414,6 +421,18 @@ frame-ancestors 'self';
    server.port=443
    ```
 4. Reiniciar la aplicación
+
+---
+
+## ☁️ Despliegue y CI/CD
+
+El proyecto cuenta con integración y despliegue continuo (CI/CD) automatizado mediante **GitHub Actions** hacia **Microsoft Azure**.
+
+### Arquitectura de Producción
+- **Hosting**: Azure App Service (Plan B1 Linux)
+- **Runtime**: Java SE (Java 21)
+- **Pipeline**: El archivo `.github/workflows/azure-deploy.yml` compila automáticamente la aplicación con Maven y sube el `.jar` resultante a Azure cada vez que hay un `push` a la rama `main`.
+- **Variables de Entorno**: Azure gestiona el puerto (`WEBSITES_PORT=8080`) y las credenciales de la base de datos PostgreSQL, evitando tener contraseñas hardcodeadas en el código fuente.
 
 ---
 

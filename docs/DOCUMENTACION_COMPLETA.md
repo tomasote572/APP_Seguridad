@@ -56,11 +56,13 @@ pie title Tecnologías del Proyecto
 ### Diagrama de Alto Nivel (Contexto)
 ```mermaid
 graph TD
-    User((Usuario/Auditor)) -->|HTTPS/Auth| WebSecLab[WebSecLab App]
-    WebSecLab -->|Escaneo DAST| TargetApp[Aplicación Objetivo]
-    WebSecLab -->|Persistencia| H2[(H2 Database)]
-    WebSecLab -->|Logs| Traffic[Traffic Logs]
-    style WebSecLab fill:#f9f,stroke:#333,stroke-width:4px
+    User((Usuario/Auditor)) -->|HTTPS/Auth| AzureApp[Azure App Service]
+    GitHub((GitHub Actions)) -->|CI/CD Pipeline| AzureApp
+    AzureApp -->|Escaneo DAST| TargetApp[Aplicación Objetivo]
+    AzureApp -->|Producción| NeonDB[(PostgreSQL - Neon.tech)]
+    AzureApp -->|Local/Desarrollo| H2[(H2 Database)]
+    style AzureApp fill:#f9f,stroke:#333,stroke-width:4px
+    style NeonDB fill:#0288d1,stroke:#333,stroke-width:2px,color:#fff
     style H2 fill:#bbf,stroke:#333,stroke-width:2px
 ```
 
