@@ -92,7 +92,6 @@ El proyecto implementa protección robusta contra vulnerabilidades del **OWASP T
 | **Acceso No Autorizado** | **A01:2021 (Control de Acceso)**| Autenticación + Autorización por roles | ✅ Activo |
 | **Session Hijacking** | **A07:2021 (Autenticación)** | Cookies HttpOnly/Secure | ✅ Activo |
 | **Exposición de Datos** | **A02:2021 (Fallos Criptográficos)**| Conexión HTTPS en Azure y NeonDB | ✅ Activo |
-| **Fuerza Bruta** | **A07:2021 (Autenticación)** | Rate Limiting / Throttling | ⚠️ Pendiente |
 
 ---
 
