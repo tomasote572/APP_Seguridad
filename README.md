@@ -99,16 +99,24 @@ El proyecto implementa protección robusta contra vulnerabilidades del **OWASP T
 
 El despliegue está automatizado vía **GitHub Actions** hacia Azure App Service.
 
-### Cómo sincronizar la Base de Datos en Producción
-Para que Azure se conecte a la base de datos PostgreSQL, debes ir a la sección de **Configuración (Variables de entorno)** de tu App Service en Azure y agregar:
+### Cómo sincronizar la Base de Datos (Local vs NeonDB)
+- **Uso Local Puro (H2 Database)**: Ejecuta `mvn spring-boot:run`. Los datos se guardarán en tu propio disco duro.
+- **Sincronizar Local con la Nube (NeonDB)**: Desde la carpeta `backend`, ejecuta el script inyector mediante el comando:
+  ```cmd
+  .\iniciar_neon.bat
+  ```
+- **Sincronizar Producción (Azure) con NeonDB**: Ve a la sección de **Configuración (Variables de entorno)** de tu App Service en Azure y agrega las siguientes variables para que el servidor se conecte a la nube:
 - `DB_URL`: `jdbc:postgresql://<host-neon>/neondb?sslmode=require`
 - `DB_USER`: `<usuario>`
 - `DB_PASS`: `<contraseña>`
 - `DB_DRIVER`: `org.postgresql.Driver`
 - `DB_DIALECT`: `org.hibernate.dialect.PostgreSQLDialect`
 
-### 🔍 Logs en Tiempo Real (Azure)
-Si hay un error 500 en producción, ve a tu App Service en el Portal de Azure y entra a **Supervisión > Flujo de registros (Log stream)** para ver la terminal de Spring Boot en vivo.
+### 🔍 Comandos de Logs en Tiempo Real (Azure)
+Si hay un error 500 en producción, puedes ver la terminal en vivo desde el Portal de Azure (**Supervisión > Flujo de registros**) o ejecutando este comando desde tu terminal local con Azure CLI:
+```bash
+az webapp log tail --name webseclab-fzazcucea8crd7e0 --resource-group <Tu-Grupo-De-Recursos>
+```
 
 ---
 
@@ -116,3 +124,11 @@ Si hay un error 500 en producción, ve a tu App Service en el Portal de Azure y 
 
 - **Pruebas Unitarias (JUnit 5)**: Ejecuta `mvn test` dentro de la carpeta `backend/`.
 - **Pruebas de Carga**: Ejecuta el script `.\load_test.bat 1` desde la terminal en la raíz del proyecto. Este script lanzará ráfagas de peticiones concurrentes para verificar la resiliencia del servidor y de la conexión a NeonDB sin caídas.
+
+---
+
+## 🎯 Conclusiones del Proyecto
+
+1. **Centralización y Automatización DAST**: La integración de un motor de escaneo dinámico directamente en la plataforma permite hacer *fingerprinting* y descubrir vulnerabilidades tecnológicas en tiempo real sin depender de herramientas externas pesadas.
+2. **Arquitectura "Secure by Design"**: Al implementar proactivamente políticas estrictas como CSP, tokens CSRF y autenticación BCrypt, la aplicación neutraliza desde su concepción las amenazas más críticas definidas por el OWASP Top 10.
+3. **Escalabilidad y Resiliencia en la Nube**: La separación de entornos (H2 local vs PostgreSQL NeonDB en la nube) combinada con el despliegue automatizado en Azure, garantiza un sistema de alta disponibilidad capaz de soportar pruebas de carga severas manteniendo un 100% de éxito en sus respuestas.
