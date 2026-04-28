@@ -8,7 +8,7 @@
 
 ## I. INTRODUCCIÓN
 
-En el panorama actual de la ciberseguridad, la detección temprana de vulnerabilidades es crítica para la integridad de los activos digitales. WebSecLab surge como una respuesta a la necesidad de herramientas académicas y profesionales que no solo detecten fallos, sino que permitan realizar un seguimiento exhaustivo de los planes de mitigación. Este proyecto se enfoca en la automatización del escaneo dinámico y la implementación de una arquitectura defensiva multicapa.
+En el panorama actual de la ciberseguridad, la detección temprana de vulnerabilidades es crítica para la integridad de los activos digitales. WebSecLab surge como una respuesta a la necesidad de herramientas académicas y profesionales que no solo detecten fallos, sino que permitan realizar un seguimiento exhaustivo de los planes de mitigación. Este proyecto se enfoca en la automatización del escaneo dinámico, la detección automática de la pila tecnológica y la implementación de una arquitectura defensiva multicapa probada bajo estrés.
 
 ## II. METODOLOGÍA
 
@@ -32,9 +32,10 @@ Se realizó un análisis de composición de software (SCA) sobre el archivo `pom
 ## V. RESULTADOS
 
 La implementación de WebSecLab permitió:
-- Reducir el tiempo de registro de hallazgos mediante el motor DAST integrado.
+- Reducir el tiempo de registro de hallazgos mediante el motor DAST integrado y la detección automática de tecnología basada en cabeceras HTTP en tiempo real.
 - Centralizar la gestión de mitigaciones, mejorando la trazabilidad del estado de las vulnerabilidades (Pendiente, En Progreso, Resuelto).
 - Validar la efectividad de los headers de seguridad mediante pruebas de penetración manuales, confirmando el bloqueo de frames externos (anti-clickjacking) y scripts no autorizados.
+- Demostrar alta disponibilidad y resiliencia del entorno Spring Boot conectado a una base de datos distribuida (PostgreSQL en Neon.tech) mediante pruebas de carga concurrentes que mantuvieron un 100% de tasa de éxito bajo estrés.
 
 ## VI. CONCLUSIONES
 

@@ -1,0 +1,6 @@
+backend/iniciar_neon.bat
+target/
+backend/target/
+node_modules/
+.idea/
+*.class

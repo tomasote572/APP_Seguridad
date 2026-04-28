@@ -30,7 +30,7 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**"))
             // Autorización de Rutas
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/css/**", "/js/**", "/images/**").permitAll()
+                .requestMatchers("/css/**", "/js/**", "/images/**", "/error", "/favicon.ico").permitAll()
                 .requestMatchers("/h2-console/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
             )

@@ -15,6 +15,7 @@ Esta guía contiene el contenido que debes copiar en el **PowerPoint Template 2*
 
 ## Diapositiva 3: Solución Propuesta (Innovación)
 - Plataforma Web integrada con motor DAST propio.
+- Detección automática en tiempo real de tecnologías base (Apache, Nginx).
 - Arquitectura "Secure by Design" basada en Spring Boot 3.3.
 - Dashboard interactivo para la toma de decisiones basada en riesgo.
 
@@ -35,10 +36,11 @@ Esta guía contiene el contenido que debes copiar en el **PowerPoint Template 2*
 - **SAST**: Código verificado contra inyección SQL y XSS.
 - **Secret Detection**: Limpieza de credenciales en configuración.
 
-## Diapositiva 7: Caso de Éxito / Aplicación de Seguridad
+## Diapositiva 7: Casos de Éxito y Resiliencia
 - **Vulnerabilidad**: Falta de protección contra Clickjacking.
 - **Acción**: Implementación de Headers de seguridad dinámicos.
 - **Resultado**: Mitigación verificada y cumplimiento de OWASP Top 10.
+- **Pruebas de Carga**: Sistema sometido a ráfagas concurrentes manteniendo un 100% de tasa de éxito sin caídas (usando PostgreSQL en NeonDB).
 
 ## Diapositiva 8: Conclusiones y Futuro
 - WebSecLab mejora la trazabilidad de seguridad en un 60%.

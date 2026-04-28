@@ -5,6 +5,7 @@
 ### Requerimientos Funcionales
 - Registro de activos web (Apps y APIs).
 - Escaneo DAST automático para fingerprinting y headers.
+- Detección automática de tecnología web (ej. Apache, nginx) mediante análisis de cabeceras HTTP en tiempo real.
 - Gestión de hallazgos con severidad y categorías OWASP.
 - Seguimiento de planes de mitigación.
 - Dashboard de estadísticas en tiempo real con gráficas interactivas.
@@ -19,9 +20,10 @@ Se mantuvo un control de versiones estricto mediante Git. Los hitos principales 
 
 ### Pruebas Realizadas
 1. **Pruebas Unitarias**: Verificación de la lógica de servicios y mapeo de entidades (JUnit 5).
-2. **Pruebas de Integración**: Validación del flujo completo desde el Controller hasta la persistencia en H2.
+2. **Pruebas de Integración**: Validación del flujo completo desde el Controller hasta la persistencia en H2 y PostgreSQL (Neon).
 3. **Escaneo DAST**: Ejecución del motor interno contra aplicaciones de prueba para validar la detección de fingerprinting.
 4. **Pruebas de Penetración Manuales**: Verificación de bypass de login e inyección de headers (bloqueados satisfactoriamente).
+5. **Pruebas de Carga y Estrés**: Implementación de scripts (ej. `load_test.bat`) para lanzar ráfagas de 100+ peticiones concurrentes, comprobando la resiliencia del servidor y la base de datos Neon sin generar errores 500.
 
 ### Evolución del Proyecto (Antes vs Después)
 - **Antes**: La aplicación original carecía de autenticación robusta y headers de seguridad. Los estilos estaban inyectados en el HTML, lo que impedía el uso de CSP.

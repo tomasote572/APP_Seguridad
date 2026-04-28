@@ -33,7 +33,32 @@ public class WebAssetController {
         asset.setName("DAST Rápido");
         asset.setType(AssetType.WEB);
         asset.setUrl(url);
-        asset.setTechnology("-");
+        
+        // Intentar detectar tecnología
+        String tech = "-";
+        try {
+            java.net.URL urlObj = new java.net.URL(url);
+            java.net.HttpURLConnection connection = (java.net.HttpURLConnection) urlObj.openConnection();
+            connection.setRequestMethod("HEAD");
+            connection.setConnectTimeout(3000);
+            connection.setReadTimeout(3000);
+            String server = connection.getHeaderField("Server");
+            String xPoweredBy = connection.getHeaderField("X-Powered-By");
+            
+            if (server != null && xPoweredBy != null) {
+                tech = server + ", " + xPoweredBy;
+            } else if (server != null) {
+                tech = server;
+            } else if (xPoweredBy != null) {
+                tech = xPoweredBy;
+            } else {
+                tech = "Oculta / No detectada";
+            }
+        } catch (Exception e) {
+            tech = "Error de conexión";
+        }
+        
+        asset.setTechnology(tech);
         asset.setDescription("Escaneo automatizado rápido.");
         WebAsset saved = service.save(asset);
         scannerService.scanAsset(saved);

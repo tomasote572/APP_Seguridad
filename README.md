@@ -222,6 +222,30 @@ Abre tu navegador en: **http://localhost:8080**
 
 ---
 
+## 🧪 Pruebas (Testing)
+
+El proyecto incluye soporte tanto para pruebas unitarias como para pruebas de carga.
+
+### Pruebas Normales (Unitarias y de Integración)
+Utilizamos **JUnit 5** y **Spring Boot Test**. Para ejecutar las pruebas automatizadas del proyecto, usa el siguiente comando en la carpeta `backend`:
+```bash
+mvn test
+```
+
+### Pruebas de Carga (Load Testing)
+Para verificar la resistencia de la aplicación y la conexión a la base de datos (Neon), se ha incluido un script en la raíz del proyecto llamado `load_test.bat`.
+
+**Cómo ejecutar la prueba de carga:**
+1. Asegúrate de que tu servidor Spring Boot esté corriendo (ver Inicio Rápido).
+2. Abre una terminal en la raíz del proyecto.
+3. Ejecuta el script de prueba pasando un identificador de la prueba (ej: 1):
+   ```cmd
+   .\load_test.bat 1
+   ```
+Este script lanzará ráfagas de 100 peticiones concurrentes a la aplicación y te mostrará el porcentaje de éxito frente a la carga.
+
+---
+
 ## 📊 Base de Datos
 
 La aplicación utiliza una estrategia de doble entorno para la base de datos:
