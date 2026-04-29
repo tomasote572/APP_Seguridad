@@ -26,6 +26,7 @@ La arquitectura se basa en micro-componentes desacoplados que facilitan la escal
 - **Capa de Seguridad**: Configuración centralizada que gestiona la autenticación, autorización y protección contra ataques de inyección y falsificación de peticiones.
 
 *Fig 1. Arquitectura a Nivel de Componentes (Formato Mermaid / Draw.io)*
+![compactada](image-2.png)
 ![ArquitecturaWebSecLab](image.png)
 
 
