@@ -1,6 +1,6 @@
 # WebSecLab: Un Enfoque Integral para la Gestión de Hallazgos de Seguridad Web y Escaneo DAST Automatizado
 
-**Autor**: Tomas
+**Autor**: Tomas Ramirez , Kevyn Forero ,Juliana Rodriguez
 
 **Resumen**— El presente artículo describe el desarrollo y la implementación de WebSecLab, una plataforma diseñada para centralizar la gestión de vulnerabilidades web detectadas mediante técnicas de Dynamic Application Security Testing (DAST). La aplicación, construida sobre un stack robusto de Spring Boot y Java 21, integra controles de seguridad avanzados como Content Security Policy (CSP), protección contra CSRF y cifrado de contraseñas mediante BCrypt. El estudio detalla la arquitectura del sistema, la metodología de desarrollo siguiendo el ciclo de vida de seguridad y los resultados obtenidos tras la implementación de controles mitigantes ante vulnerabilidades comunes del OWASP Top 10.
 
@@ -25,6 +25,13 @@ La arquitectura se basa en micro-componentes desacoplados que facilitan la escal
 - **Frontend**: Interfaz responsiva utilizando Thymeleaf y Bootstrap 5, diseñada para ser compatible con políticas CSP estrictas.
 - **Capa de Seguridad**: Configuración centralizada que gestiona la autenticación, autorización y protección contra ataques de inyección y falsificación de peticiones.
 
+*Fig 1. Arquitectura a Nivel de Componentes (Formato Mermaid / Draw.io)*
+![ArquitecturaWebSecLab](image.png)
+
+
+*Fig 2. Diagrama de Funcionamiento del Motor DAST (Secuencia)*
+
+![Secuencia](image-1.png)
 ## IV. ANÁLISIS DE SEGURIDAD (SCA & SAST)
 
 Se realizó un análisis de composición de software (SCA) sobre el archivo `pom.xml`, identificando las versiones exactas de las librerías. No se detectaron vulnerabilidades críticas en el núcleo de Spring Boot 3.3.5. Asimismo, se implementó un proceso de detección de secretos para evitar la exposición de credenciales en el código fuente.

@@ -59,62 +59,7 @@ A continuación se presenta la arquitectura del sistema, diseñada bajo el patr�
 
 ### Diagrama de Arquitectura (Estilo Cloud / AWS)
 
-```mermaid
-graph TD
-    %% Definición de estilos imitando la paleta de AWS / Cloud
-    classDef awsCompute fill:#FF9900,stroke:#232F3E,stroke-width:2px,color:white;
-    classDef awsDatabase fill:#336699,stroke:#232F3E,stroke-width:2px,color:white;
-    classDef awsNetwork fill:#8C4FFF,stroke:#232F3E,stroke-width:2px,color:white;
-    classDef attackVector fill:#FF4F4F,stroke:#8B0000,stroke-width:2px,color:white,stroke-dasharray: 5 5;
-    classDef securityControl fill:#4CAF50,stroke:#1B5E20,stroke-width:2px,color:white;
-    classDef neutral fill:#F3F3F3,stroke:#333,stroke-width:1px;
-
-    subgraph Internet ["🌐 Superficie de Ataque (Red Pública)"]
-        Attacker["Hacker / Bot malicioso\n(Intento de inyección/Brute Force)"]:::attackVector
-        User["Auditor / Usuario Legítimo\n(Tráfico normal)"]:::neutral
-    end
-
-    subgraph Nube ["☁️ Infraestructura Cloud (Azure App Service / AWS EC2)"]
-        
-        subgraph Perimetro ["🛡️ Capa de Seguridad (Controles Perimetrales e Internos)"]
-            HTTPS["Protocolo HTTPS\n(Cifrado en tránsito)"]:::securityControl
-            Filter["Spring Security Filter Chain\n(AuthC & AuthZ)"]:::securityControl
-            Headers["Headers de Seguridad\n(CSP, X-Frame-Options)"]:::securityControl
-            CSRF["Validador CSRF\n(Tokens por sesión)"]:::securityControl
-        end
-
-        subgraph Compute ["⚙️ Compute Node (Java 21)"]
-            App["WebSecLab Core\n(Controladores y Servicios)"]:::awsCompute
-            DAST["Motor DAST Integrado\n(HTTP Scanner Automático)"]:::awsCompute
-        end
-
-        subgraph DataTier ["🗄️ Database Tier (NeonDB / AWS RDS)"]
-            DB["PostgreSQL Database\n(Cifrado en reposo)"]:::awsDatabase
-        end
-    end
-
-    TargetApp["🌐 Aplicaciones Objetivo\n(Activos Web a auditar)"]:::neutral
-
-    %% Flujos de tráfico y ataque
-    Attacker -- "Payloads maliciosos\n(XSS, SQLi, Clickjacking)" --> HTTPS
-    User -- "Peticiones Web" --> HTTPS
-
-    %% Cadena de seguridad
-    HTTPS --> Filter
-    Filter --> Headers
-    Headers --> CSRF
-    CSRF --> App
-
-    %% Operaciones internas
-    App <--> DAST
-    DAST -- "Peticiones HEAD/GET" --> TargetApp
-    App -- "Consultas JPA Parametrizadas\n(Prevención SQLi)" --> DB
-
-    %% Notas explicativas
-    classDef note fill:#FFFFCC,stroke:#333,stroke-width:1px;
-    note1>Superficie de Ataque: Endpoints públicos, Formularios de Login y Cookies de sesión]:::note
-    note2>Controles Aplicados: Encriptación BCrypt, Sanitización Thymeleaf, CSP y Filtros REST]:::note
-```
+![arquitectura](image-2.png)
 
 ---
 
