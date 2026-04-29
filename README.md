@@ -18,7 +18,7 @@ mvn spring-boot:run
 
 ### 2. Acceder a la Aplicación
 - **URL**: [http://localhost:8080](http://localhost:8080)
-- **URL**: [webseclab-fzazcucea8crd7e0.canadacentral-01.azurewebsites.net][webseclab-fzazcucea8crd7e0.canadacentral-01.azurewebsites.net]
+- **URL**: [https://webseclab-fzazcucea8crd7e0.canadacentral-01.azurewebsites.net][https://webseclab-fzazcucea8crd7e0.canadacentral-01.azurewebsites.net]
 - **Credenciales (Admin)**: `tomas` / `nitro321` o `admin` / `sistemas26`
 
 ---
